@@ -1,5 +1,3 @@
-json
 boto3
 langchain
 streamlit
-re
