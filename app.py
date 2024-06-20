@@ -4,6 +4,14 @@ import json
 from langchain_core.prompts import PromptTemplate
 import re
 
+with st.sidebar:
+    aws_access_key_id = st.text_input("AWS Access Key Id", placeholder="access key", type="password")
+    aws_secret_access_key = st.text_input("AWS Secret Access Key", placeholder="secret", type="password")
+
+boto_session = boto3.session.Session(
+    aws_access_key_id=aws_access_key_id,
+    aws_secret_access_key=aws_secret_access_key)
+
 # Create a Bedrock Runtime client in the AWS Region of your choice.
 client = boto3.client("bedrock-runtime", region_name="us-west-2")
 
