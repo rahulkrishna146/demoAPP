@@ -13,7 +13,7 @@ boto_session = boto3.session.Session(
     aws_secret_access_key=aws_secret_access_key)
 
 # Create a Bedrock Runtime client in the AWS Region of your choice.
-client = boto3.client("bedrock-runtime", region_name="us-west-2")
+client = boto_session.client("bedrock-runtime", region_name="us-west-2")
 
 # Set the model ID, e.g., Claude 3 Haiku.
 model_id = "anthropic.claude-3-haiku-20240307-v1:0"
