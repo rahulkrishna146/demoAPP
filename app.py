@@ -44,7 +44,7 @@ if model =='Haiku':
     model_id = "anthropic.claude-3-haiku-20240307-v1:0"
 elif model =='Sonnet':
     model_id = "anthropic.claude-3-sonnet-20240229-v1:0"
-else:
+elif model =='Opus':
     model_id = "anthropic.claude-3-opus-20240229-v1:0"
 
 #partial marks    
@@ -75,7 +75,7 @@ if st.button(label = 'Evaluate student answer'):
         native_request = {
         "anthropic_version": "bedrock-2023-05-31",
         "max_tokens": 512,
-        "temperature": 0.5,
+        "temperature": 1,
         "messages": [
         {
             "role": "user",
@@ -96,7 +96,7 @@ if st.button(label = 'Evaluate student answer'):
         native_request = {
             "anthropic_version": "bedrock-2023-05-31",
             "max_tokens": 512,
-            "temperature": 0.5,
+            "temperature": 1,
             "messages": [
                 {
                     "role": "user",
