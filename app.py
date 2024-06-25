@@ -28,13 +28,12 @@ chapter = st.text_input('Enter chapter name')
 question = st.text_area('Enter the question')
 accepted_answer = st.text_area('Enter accepted/best answer')
 grading_criteria = st.text_area('Describe grading criteria')
-student_answer = st.text_area('Enter student answer')
+student_answer = st.text_area('Enter student answer or upload an image')
 image_upload = st.file_uploader("Upload an image",type=['jpeg','png','jpg'])
 image_uploaded = ''# empty string
 # if image input:
-if student_answer is None:
-    student_answer = 'Please find the students handwritten answer as image'
 if image_upload is not None:
+    student_answer = 'Please find the students handwritten answer as image'
     image_uploaded = 'from the image of the handwritten answer '
     image_bytes = image_upload.getvalue()
     encoded_image = base64.b64encode(image_bytes).decode("utf-8")
@@ -67,8 +66,8 @@ Please evaluate the student’s answer {image_uploaded}and provide most concise 
 
 model_prompt = prompt.invoke({"grade":grade, "subject": subject, "max_marks": max_marks, "question_type": question_type,"chapter": chapter, "partial": partial, "question": question, "accepted_answer": accepted_answer, "grading_criteria": grading_criteria, "student_answer": student_answer, "image_uploaded": image_uploaded})
 
-if st.button(label = 'view prompt'):
-    st.write(f"Prompt: {model_prompt.text}")
+#if st.button(label = 'view prompt'):
+    #st.write(f"Prompt: {model_prompt.text}")
 
 if st.button(label = 'Evaluate student answer'):
     # Format the request payload using the model's native structure.
