@@ -17,6 +17,13 @@ boto_session = boto3.session.Session(
 client = boto_session.client("bedrock-runtime", region_name="us-west-2")
 
 st.title('Intelligent Correction')
+# initilaize session state 
+# Initialization
+if 'input_tok' not in st.session_state:
+    st.session_state['input_tok'] = 0
+if 'output_tok' not in st.session_state:
+    st.session_state['output_tok'] = 0
+
 # Create prompt template
 # declare variables 
 grade = st.text_input('Class')
@@ -112,6 +119,11 @@ if st.button(label = 'Evaluate student answer'):
 
     # Decode the response body.
     model_response = json.loads(response["body"].read())
+    input_tok = model_response['usage']['input_tokens']
+    output_tok = model_response['usage']['output_tokens']
+
+    st.session_state.input_tok = input_tok
+    st.session_state.output_tok = output_tok
 
     # Extract and print the response text.
     response_text = model_response["content"][0]["text"]
@@ -120,6 +132,18 @@ if st.button(label = 'Evaluate student answer'):
     reason_response =re.search(r'<reason>(.*?)</reason>', response_text)
     if reason_response:
         st.write(f"Reason for grading: {reason_response.group(1)}")
-    
+
+if st.button(label = 'Analyse cost of evaluation'):
+    st.write(f"Input tokens processed : {st.session_state.input_tok}")
+    st.write(f"output tokens generated : {st.session_state.output_tok}")
+    st.write(f"model used: {model}")
+    if model=="Haiku":
+        cost = st.session_state.input_tok*0.00025/1000 + st.session_state.output_tok*0.00125/1000
+    elif model =='Sonnet':
+        cost = st.session_state.input_tok*0.003/1000 + st.session_state.output_tok*0.015/1000
+    elif model == 'Opus':
+        cost = st.session_state.input_tok*0.015/1000 + st.session_state.output_tok*0.075/1000
+    st.write(f"Cost of evaluating : {cost} USD")
+
     
 
