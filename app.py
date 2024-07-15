@@ -47,15 +47,15 @@ if image_upload is not None:
     encoded_image = base64.b64encode(image_bytes).decode("utf-8")
 
 #model selction
-model = st.selectbox('Choose model', ('Haiku','Sonnet3.5'))
-if model =='Haiku':
+model = st.selectbox('Choose model', ('Basic','Advanced'))
+if model =='Basic':
     model_id = "anthropic.claude-3-haiku-20240307-v1:0"
-elif model =='Sonnet3.5':
+elif model =='Advanced':
     model_id = "anthropic.claude-3-5-sonnet-20240620-v1:0"
 
 #partial marks    
 if partial_marks:
-    partial = "Partial marks can be awarded if the answer is partially correct."
+    partial = "Partial marks can be awarded if the answer is partially correct. Award marks as multiples of 0.5 or 1 marks"
 else:
     partial = "Award marks only if the answer is fully correct"
 
